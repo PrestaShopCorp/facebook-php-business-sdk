@@ -24,6 +24,8 @@
 
 namespace FacebookAds\Object\Fields;
 
+use FacebookAds\Object\AbstractObject;
+
 class Agency extends AbstractObject {
 
 }
