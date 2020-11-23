@@ -34,7 +34,7 @@ class EmailNormalizerTest extends AbstractUnitTestCase {
      */
     protected $emailNormalizer;
 
-    public function setUp() {
+    public function setup() : void {
         $this->emailNormalizer = new EmailNormalizer();
     }
 
