@@ -26,25 +26,21 @@ namespace FacebookAds\Object\ServerSide;
 
 use FacebookAds\Api;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Handler\CurlHandler;
+use Prestashop\ModuleLibGuzzleAdapter\ClientFactory;
+use Psr\Http\Client\ClientInterface;
 
 class AsyncClient extends Singleton {
+  /**
+   * @var ClientInterface
+   */
   protected $client = null;
 
   public function __construct() {
-    $handler_stack = HandlerStack::create(new CurlHandler([
-      'options' => [
-        CURLOPT_CONNECTTIMEOUT => 10,
-        CURLOPT_TIMEOUT => 60,
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_HEADER => true,
-        CURLOPT_CAINFO => Api::instance()->getHttpClient()->getCaBundlePath(),
-      ]
-    ]));
-
-    $this->client = new Client(['handler' => $handler_stack]);
+    $this->client = (new ClientFactory())->getClient([
+      'connect_timeout' => 10,
+      'timeout' => 60,
+      'verify' => Api::instance()->getHttpClient()->getCaBundlePath(),
+    ]);
   }
 
   public function getClient() {
