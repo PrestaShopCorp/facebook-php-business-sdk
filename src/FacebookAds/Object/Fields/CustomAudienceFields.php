@@ -1,25 +1,10 @@
 <?php
-/**
- * Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
+ /*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * All rights reserved.
  *
- * You are hereby granted a non-exclusive, worldwide, royalty-free license to
- * use, copy, modify, and distribute this software in source code or binary
- * form for use in connection with the web services and APIs provided by
- * Facebook.
- *
- * As with any software that integrates with the Facebook platform, your use
- * of this software is subject to the Facebook Developer Principles and
- * Policies [http://developers.facebook.com/policy/]. This copyright notice
- * shall be included in all copies or substantial portions of the software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- *
+ * This source code is licensed under the license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 namespace FacebookAds\Object\Fields;
@@ -87,15 +72,20 @@ class CustomAudienceFields extends AbstractEnum {
   const EVENT_SOURCE_GROUP = 'event_source_group';
   const EVENT_SOURCES = 'event_sources';
   const EXCLUSIONS = 'exclusions';
+  const FACEBOOK_PAGE_ID = 'facebook_page_id';
   const INCLUSIONS = 'inclusions';
   const LIST_OF_ACCOUNTS = 'list_of_accounts';
+  const MARKETING_MESSAGE_CHANNELS = 'marketing_message_channels';
   const ORIGIN_AUDIENCE_ID = 'origin_audience_id';
   const PARENT_AUDIENCE_ID = 'parent_audience_id';
   const PARTNER_REFERENCE_KEY = 'partner_reference_key';
   const PREFILL = 'prefill';
   const PRODUCT_SET_ID = 'product_set_id';
+  const SUBSCRIPTION_INFO = 'subscription_info';
+  const USE_FOR_PRODUCTS = 'use_for_products';
   const USE_IN_CAMPAIGNS = 'use_in_campaigns';
   const VIDEO_GROUP_IDS = 'video_group_ids';
+  const WHATS_APP_BUSINESS_PHONE_NUMBER_ID = 'whats_app_business_phone_number_id';
 
   public function getFieldTypes() {
     return array(
@@ -149,15 +139,20 @@ class CustomAudienceFields extends AbstractEnum {
       'event_source_group' => 'string',
       'event_sources' => 'list<map>',
       'exclusions' => 'list<Object>',
+      'facebook_page_id' => 'string',
       'inclusions' => 'list<Object>',
       'list_of_accounts' => 'list<unsigned int>',
+      'marketing_message_channels' => 'Object',
       'origin_audience_id' => 'string',
       'parent_audience_id' => 'unsigned int',
       'partner_reference_key' => 'string',
       'prefill' => 'bool',
       'product_set_id' => 'string',
+      'subscription_info' => 'list<SubscriptionInfo>',
+      'use_for_products' => 'list<UseForProducts>',
       'use_in_campaigns' => 'bool',
       'video_group_ids' => 'list<string>',
+      'whats_app_business_phone_number_id' => 'string',
     );
   }
 }

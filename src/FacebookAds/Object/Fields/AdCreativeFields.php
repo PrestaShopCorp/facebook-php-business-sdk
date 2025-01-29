@@ -1,25 +1,10 @@
 <?php
-/**
- * Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
+ /*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * All rights reserved.
  *
- * You are hereby granted a non-exclusive, worldwide, royalty-free license to
- * use, copy, modify, and distribute this software in source code or binary
- * form for use in connection with the web services and APIs provided by
- * Facebook.
- *
- * As with any software that integrates with the Facebook platform, your use
- * of this software is subject to the Facebook Developer Principles and
- * Policies [http://developers.facebook.com/policy/]. This copyright notice
- * shall be included in all copies or substantial portions of the software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- *
+ * This source code is licensed under the license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 namespace FacebookAds\Object\Fields;
@@ -39,6 +24,7 @@ class AdCreativeFields extends AbstractEnum {
 
   const ACCOUNT_ID = 'account_id';
   const ACTOR_ID = 'actor_id';
+  const AD_DISCLAIMER_SPEC = 'ad_disclaimer_spec';
   const ADLABELS = 'adlabels';
   const APPLINK_TREATMENT = 'applink_treatment';
   const ASSET_FEED_SPEC = 'asset_feed_spec';
@@ -52,6 +38,8 @@ class AdCreativeFields extends AbstractEnum {
   const CATEGORIZATION_CRITERIA = 'categorization_criteria';
   const CATEGORY_MEDIA_SOURCE = 'category_media_source';
   const COLLABORATIVE_ADS_LSB_IMAGE_BANK_ID = 'collaborative_ads_lsb_image_bank_id';
+  const CONTEXTUAL_MULTI_ADS = 'contextual_multi_ads';
+  const CREATIVE_SOURCING_SPEC = 'creative_sourcing_spec';
   const DEGREES_OF_FREEDOM_SPEC = 'degrees_of_freedom_spec';
   const DESTINATION_SET_ID = 'destination_set_id';
   const DYNAMIC_AD_VOICE = 'dynamic_ad_voice';
@@ -85,10 +73,13 @@ class AdCreativeFields extends AbstractEnum {
   const OBJECT_TYPE = 'object_type';
   const OBJECT_URL = 'object_url';
   const OMNICHANNEL_LINK_SPEC = 'omnichannel_link_spec';
+  const PAGE_WELCOME_MESSAGE = 'page_welcome_message';
+  const PHOTO_ALBUM_SOURCE_OBJECT_STORY_ID = 'photo_album_source_object_story_id';
   const PLACE_PAGE_SET_ID = 'place_page_set_id';
   const PLATFORM_CUSTOMIZATIONS = 'platform_customizations';
   const PLAYABLE_ASSET_ID = 'playable_asset_id';
   const PORTRAIT_CUSTOMIZATIONS = 'portrait_customizations';
+  const PRODUCT_DATA = 'product_data';
   const PRODUCT_SET_ID = 'product_set_id';
   const RECOMMENDER_SETTINGS = 'recommender_settings';
   const SOURCE_INSTAGRAM_MEDIA_ID = 'source_instagram_media_id';
@@ -109,6 +100,7 @@ class AdCreativeFields extends AbstractEnum {
     return array(
       'account_id' => 'string',
       'actor_id' => 'string',
+      'ad_disclaimer_spec' => 'AdCreativeAdDisclaimer',
       'adlabels' => 'list<AdLabel>',
       'applink_treatment' => 'string',
       'asset_feed_spec' => 'AdAssetFeedSpec',
@@ -122,6 +114,8 @@ class AdCreativeFields extends AbstractEnum {
       'categorization_criteria' => 'string',
       'category_media_source' => 'string',
       'collaborative_ads_lsb_image_bank_id' => 'string',
+      'contextual_multi_ads' => 'AdCreativeContextualMultiAds',
+      'creative_sourcing_spec' => 'AdCreativeSourcingSpec',
       'degrees_of_freedom_spec' => 'AdCreativeDegreesOfFreedomSpec',
       'destination_set_id' => 'string',
       'dynamic_ad_voice' => 'string',
@@ -155,10 +149,13 @@ class AdCreativeFields extends AbstractEnum {
       'object_type' => 'ObjectType',
       'object_url' => 'string',
       'omnichannel_link_spec' => 'AdCreativeOmnichannelLinkSpec',
+      'page_welcome_message' => 'string',
+      'photo_album_source_object_story_id' => 'string',
       'place_page_set_id' => 'string',
       'platform_customizations' => 'AdCreativePlatformCustomization',
       'playable_asset_id' => 'string',
       'portrait_customizations' => 'AdCreativePortraitCustomizations',
+      'product_data' => 'list<AdCreativeProductData>',
       'product_set_id' => 'string',
       'recommender_settings' => 'AdCreativeRecommenderSettings',
       'source_instagram_media_id' => 'string',

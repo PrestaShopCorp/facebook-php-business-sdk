@@ -1,25 +1,10 @@
 <?php
-/**
- * Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
+ /*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * All rights reserved.
  *
- * You are hereby granted a non-exclusive, worldwide, royalty-free license to
- * use, copy, modify, and distribute this software in source code or binary
- * form for use in connection with the web services and APIs provided by
- * Facebook.
- *
- * As with any software that integrates with the Facebook platform, your use
- * of this software is subject to the Facebook Developer Principles and
- * Policies [http://developers.facebook.com/policy/]. This copyright notice
- * shall be included in all copies or substantial portions of the software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- *
+ * This source code is licensed under the license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 namespace FacebookAds\Object;
@@ -39,10 +24,10 @@ use FacebookAds\Object\Values\AdVideoTypeValues;
 use FacebookAds\Object\Values\AdVideoUnpublishedContentTypeValues;
 use FacebookAds\Object\Values\AdVideoUploadPhaseValues;
 use FacebookAds\Object\Values\BusinessSurveyBusinessTypeValues;
+use FacebookAds\Object\Values\BusinessTimezoneIdValues;
 use FacebookAds\Object\Values\BusinessVerticalValues;
 use FacebookAds\Object\Values\EventTypeValues;
 use FacebookAds\Object\Values\FundraiserPersonToCharityFundraiserTypeValues;
-use FacebookAds\Object\Values\GameItemActionValues;
 use FacebookAds\Object\Values\LiveVideoBroadcastStatusValues;
 use FacebookAds\Object\Values\LiveVideoProjectionValues;
 use FacebookAds\Object\Values\LiveVideoSourceValues;
@@ -55,15 +40,14 @@ use FacebookAds\Object\Values\PhotoBackdatedTimeGranularityValues;
 use FacebookAds\Object\Values\PhotoTypeValues;
 use FacebookAds\Object\Values\PhotoUnpublishedContentTypeValues;
 use FacebookAds\Object\Values\PostBackdatedTimeGranularityValues;
-use FacebookAds\Object\Values\PostCheckinEntryPointValues;
 use FacebookAds\Object\Values\PostFormattingValues;
 use FacebookAds\Object\Values\PostPlaceAttachmentSettingValues;
 use FacebookAds\Object\Values\PostPostSurfacesBlacklistValues;
 use FacebookAds\Object\Values\PostPostingToRedspaceValues;
 use FacebookAds\Object\Values\PostTargetSurfaceValues;
 use FacebookAds\Object\Values\PostUnpublishedContentTypeValues;
-use FacebookAds\Object\Values\ProfilePictureSourceBreakingChangeValues;
 use FacebookAds\Object\Values\ProfilePictureSourceTypeValues;
+use FacebookAds\Object\Values\UnifiedThreadPlatformValues;
 use FacebookAds\Object\Values\UserFilteringValues;
 use FacebookAds\Object\Values\UserLocalNewsMegaphoneDismissStatusValues;
 use FacebookAds\Object\Values\UserLocalNewsSubscriptionStatusValues;
@@ -124,9 +108,9 @@ class User extends AbstractCrudObject {
     $this->assureId();
 
     $param_types = array(
-      'business_app' => 'int',
+      'business_app' => 'string',
       'page_id' => 'string',
-      'scope' => 'list<Permission>',
+      'scope' => 'list<string>',
       'set_token_expires_in_60_days' => 'bool',
     );
     $enums = array(
@@ -151,6 +135,7 @@ class User extends AbstractCrudObject {
     $this->assureId();
 
     $param_types = array(
+      'ad_id' => 'string',
       'is_place' => 'bool',
       'is_promotable' => 'bool',
     );
@@ -409,6 +394,29 @@ class User extends AbstractCrudObject {
     return $pending ? $request : $request->execute();
   }
 
+  public function getAssignedApplications(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/assigned_applications',
+      new Application(),
+      'EDGE',
+      Application::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
   public function getAssignedBusinessAssetGroups(array $fields = array(), array $params = array(), $pending = false) {
     $this->assureId();
 
@@ -493,9 +501,9 @@ class User extends AbstractCrudObject {
       $this->data['id'],
       RequestInterface::METHOD_GET,
       '/avatars',
-      new AbstractCrudObject(),
+      new Avatar(),
       'EDGE',
-      array(),
+      Avatar::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -585,11 +593,12 @@ class User extends AbstractCrudObject {
       'survey_business_type' => 'survey_business_type_enum',
       'survey_num_assets' => 'unsigned int',
       'survey_num_people' => 'unsigned int',
-      'timezone_id' => 'unsigned int',
+      'timezone_id' => 'timezone_id_enum',
       'vertical' => 'vertical_enum',
     );
     $enums = array(
       'survey_business_type_enum' => BusinessSurveyBusinessTypeValues::getInstance()->getValues(),
+      'timezone_id_enum' => BusinessTimezoneIdValues::getInstance()->getValues(),
       'vertical_enum' => BusinessVerticalValues::getInstance()->getValues(),
     );
 
@@ -613,10 +622,12 @@ class User extends AbstractCrudObject {
 
     $param_types = array(
       'folder' => 'string',
+      'platform' => 'platform_enum',
       'tags' => 'list<string>',
       'user_id' => 'string',
     );
     $enums = array(
+      'platform_enum' => UnifiedThreadPlatformValues::getInstance()->getValues(),
     );
 
     $request = new ApiRequest(
@@ -717,22 +728,21 @@ class User extends AbstractCrudObject {
 
     $param_types = array(
       'actions' => 'Object',
-      'adaptive_type' => 'string',
       'album_id' => 'string',
       'android_key_hash' => 'string',
-      'animated_effect_id' => 'unsigned int',
       'application_id' => 'string',
       'asked_fun_fact_prompt_id' => 'unsigned int',
-      'asset3d_id' => 'unsigned int',
+      'asset3d_id' => 'string',
       'associated_id' => 'string',
       'attach_place_suggestion' => 'bool',
       'attached_media' => 'list<Object>',
       'audience_exp' => 'bool',
       'backdated_time' => 'datetime',
       'backdated_time_granularity' => 'backdated_time_granularity_enum',
+      'breaking_news' => 'bool',
+      'breaking_news_expiration' => 'unsigned int',
       'call_to_action' => 'Object',
       'caption' => 'string',
-      'checkin_entry_point' => 'checkin_entry_point_enum',
       'child_attachments' => 'list<Object>',
       'client_mutation_id' => 'string',
       'composer_entry_picker' => 'string',
@@ -753,11 +763,9 @@ class User extends AbstractCrudObject {
       'expanded_width' => 'unsigned int',
       'feed_targeting' => 'Object',
       'formatting' => 'formatting_enum',
-      'fun_fact_prompt_id' => 'unsigned int',
+      'fun_fact_prompt_id' => 'string',
       'fun_fact_toastee_id' => 'unsigned int',
-      'has_nickname' => 'bool',
       'height' => 'unsigned int',
-      'holiday_card' => 'string',
       'home_checkin_city_id' => 'Object',
       'image_crops' => 'map',
       'implicit_with_tags' => 'list<int>',
@@ -778,7 +786,6 @@ class User extends AbstractCrudObject {
       'name' => 'string',
       'nectar_module' => 'string',
       'object_attachment' => 'string',
-      'offer_like_post_id' => 'unsigned int',
       'og_action_type_id' => 'string',
       'og_hide_object_attachment' => 'bool',
       'og_icon_id' => 'string',
@@ -802,7 +809,6 @@ class User extends AbstractCrudObject {
       'publish_event_id' => 'unsigned int',
       'published' => 'bool',
       'quote' => 'string',
-      'react_mode_metadata' => 'string',
       'ref' => 'list<string>',
       'referenceable_image_ids' => 'list<string>',
       'referral_id' => 'string',
@@ -817,7 +823,6 @@ class User extends AbstractCrudObject {
       'text_format_metadata' => 'string',
       'text_format_preset_id' => 'string',
       'text_only_place' => 'string',
-      'throwback_camera_roll_media' => 'string',
       'thumbnail' => 'file',
       'time_since_original_post' => 'unsigned int',
       'title' => 'string',
@@ -830,7 +835,6 @@ class User extends AbstractCrudObject {
     );
     $enums = array(
       'backdated_time_granularity_enum' => PostBackdatedTimeGranularityValues::getInstance()->getValues(),
-      'checkin_entry_point_enum' => PostCheckinEntryPointValues::getInstance()->getValues(),
       'formatting_enum' => PostFormattingValues::getInstance()->getValues(),
       'place_attachment_setting_enum' => PostPlaceAttachmentSettingValues::getInstance()->getValues(),
       'post_surfaces_blacklist_enum' => PostPostSurfacesBlacklistValues::getInstance()->getValues(),
@@ -932,65 +936,6 @@ class User extends AbstractCrudObject {
       new FundraiserPersonToCharity(),
       'EDGE',
       FundraiserPersonToCharity::getFieldsEnum()->getValues(),
-      new TypeChecker($param_types, $enums)
-    );
-    $request->addParams($params);
-    $request->addFields($fields);
-    return $pending ? $request : $request->execute();
-  }
-
-  public function createGameItem(array $fields = array(), array $params = array(), $pending = false) {
-    $this->assureId();
-
-    $param_types = array(
-      'action' => 'action_enum',
-      'app_id' => 'string',
-      'drop_table_id' => 'string',
-      'ext_id' => 'string',
-      'item_id' => 'string',
-      'quantity' => 'unsigned int',
-    );
-    $enums = array(
-      'action_enum' => GameItemActionValues::getInstance()->getValues(),
-    );
-
-    $request = new ApiRequest(
-      $this->api,
-      $this->data['id'],
-      RequestInterface::METHOD_POST,
-      '/game_items',
-      new GameItem(),
-      'EDGE',
-      GameItem::getFieldsEnum()->getValues(),
-      new TypeChecker($param_types, $enums)
-    );
-    $request->addParams($params);
-    $request->addFields($fields);
-    return $pending ? $request : $request->execute();
-  }
-
-  public function createGameTime(array $fields = array(), array $params = array(), $pending = false) {
-    $this->assureId();
-
-    $param_types = array(
-      'action' => 'action_enum',
-    );
-    $enums = array(
-      'action_enum' => array(
-        'END',
-        'HEARTBEAT',
-        'START',
-      ),
-    );
-
-    $request = new ApiRequest(
-      $this->api,
-      $this->data['id'],
-      RequestInterface::METHOD_POST,
-      '/game_times',
-      new AbstractCrudObject(),
-      'EDGE',
-      array(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -1442,7 +1387,6 @@ class User extends AbstractCrudObject {
       'proxied_app_id' => 'string',
       'published' => 'bool',
       'qn' => 'string',
-      'scheduled_publish_time' => 'unsigned int',
       'spherical_metadata' => 'map',
       'sponsor_id' => 'string',
       'sponsor_relationship' => 'unsigned int',
@@ -1480,14 +1424,12 @@ class User extends AbstractCrudObject {
     $this->assureId();
 
     $param_types = array(
-      'breaking_change' => 'breaking_change_enum',
       'height' => 'int',
       'redirect' => 'bool',
       'type' => 'type_enum',
       'width' => 'int',
     );
     $enums = array(
-      'breaking_change_enum' => ProfilePictureSourceBreakingChangeValues::getInstance()->getValues(),
       'type_enum' => ProfilePictureSourceTypeValues::getInstance()->getValues(),
     );
 
@@ -1612,8 +1554,6 @@ class User extends AbstractCrudObject {
     $this->assureId();
 
     $param_types = array(
-      'adaptive_type' => 'string',
-      'animated_effect_id' => 'unsigned int',
       'application_id' => 'string',
       'asked_fun_fact_prompt_id' => 'unsigned int',
       'audio_story_wave_animation_handle' => 'string',
@@ -1638,12 +1578,10 @@ class User extends AbstractCrudObject {
       'formatting' => 'formatting_enum',
       'fov' => 'unsigned int',
       'front_z_rotation' => 'float',
-      'fun_fact_prompt_id' => 'unsigned int',
+      'fun_fact_prompt_id' => 'string',
       'fun_fact_toastee_id' => 'unsigned int',
       'guide' => 'list<list<unsigned int>>',
       'guide_enabled' => 'bool',
-      'has_nickname' => 'bool',
-      'holiday_card' => 'string',
       'initial_heading' => 'unsigned int',
       'initial_pitch' => 'unsigned int',
       'instant_game_entry_point_data' => 'string',
@@ -1654,7 +1592,6 @@ class User extends AbstractCrudObject {
       'location_source_id' => 'string',
       'manual_privacy' => 'bool',
       'no_story' => 'bool',
-      'offer_like_post_id' => 'unsigned int',
       'og_action_type_id' => 'string',
       'og_icon_id' => 'string',
       'og_object_id' => 'string',
@@ -1664,7 +1601,6 @@ class User extends AbstractCrudObject {
       'original_projection_type' => 'original_projection_type_enum',
       'privacy' => 'string',
       'publish_event_id' => 'unsigned int',
-      'react_mode_metadata' => 'string',
       'referenced_sticker_id' => 'string',
       'replace_video_id' => 'string',
       'slideshow_spec' => 'map',
@@ -1675,7 +1611,6 @@ class User extends AbstractCrudObject {
       'start_offset' => 'unsigned int',
       'swap_mode' => 'swap_mode_enum',
       'text_format_metadata' => 'string',
-      'throwback_camera_roll_media' => 'string',
       'thumb' => 'file',
       'time_since_original_post' => 'unsigned int',
       'title' => 'string',

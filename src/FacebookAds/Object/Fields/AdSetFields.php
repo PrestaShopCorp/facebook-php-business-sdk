@@ -1,25 +1,10 @@
 <?php
-/**
- * Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
+ /*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * All rights reserved.
  *
- * You are hereby granted a non-exclusive, worldwide, royalty-free license to
- * use, copy, modify, and distribute this software in source code or binary
- * form for use in connection with the web services and APIs provided by
- * Facebook.
- *
- * As with any software that integrates with the Facebook platform, your use
- * of this software is subject to the Facebook Developer Principles and
- * Policies [http://developers.facebook.com/policy/]. This copyright notice
- * shall be included in all copies or substantial portions of the software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- *
+ * This source code is licensed under the license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 namespace FacebookAds\Object\Fields;
@@ -48,8 +33,10 @@ class AdSetFields extends AbstractEnum {
   const BID_INFO = 'bid_info';
   const BID_STRATEGY = 'bid_strategy';
   const BILLING_EVENT = 'billing_event';
+  const BRAND_SAFETY_CONFIG = 'brand_safety_config';
   const BUDGET_REMAINING = 'budget_remaining';
   const CAMPAIGN = 'campaign';
+  const CAMPAIGN_ACTIVE_TIME = 'campaign_active_time';
   const CAMPAIGN_ATTRIBUTION = 'campaign_attribution';
   const CAMPAIGN_ID = 'campaign_id';
   const CONFIGURED_STATUS = 'configured_status';
@@ -68,6 +55,7 @@ class AdSetFields extends AbstractEnum {
   const FULL_FUNNEL_EXPLORATION_MODE = 'full_funnel_exploration_mode';
   const ID = 'id';
   const INSTAGRAM_ACTOR_ID = 'instagram_actor_id';
+  const IS_BUDGET_SCHEDULE_ENABLED = 'is_budget_schedule_enabled';
   const IS_DYNAMIC_CREATIVE = 'is_dynamic_creative';
   const ISSUES_INFO = 'issues_info';
   const LEARNING_STAGE_INFO = 'learning_stage_info';
@@ -75,6 +63,8 @@ class AdSetFields extends AbstractEnum {
   const LIFETIME_IMPS = 'lifetime_imps';
   const LIFETIME_MIN_SPEND_TARGET = 'lifetime_min_spend_target';
   const LIFETIME_SPEND_CAP = 'lifetime_spend_cap';
+  const MAX_BUDGET_SPEND_PERCENTAGE = 'max_budget_spend_percentage';
+  const MIN_BUDGET_SPEND_PERCENTAGE = 'min_budget_spend_percentage';
   const MULTI_OPTIMIZATION_GOAL_WEIGHT = 'multi_optimization_goal_weight';
   const NAME = 'name';
   const OPTIMIZATION_GOAL = 'optimization_goal';
@@ -83,6 +73,8 @@ class AdSetFields extends AbstractEnum {
   const PROMOTED_OBJECT = 'promoted_object';
   const RECOMMENDATIONS = 'recommendations';
   const RECURRING_BUDGET_SEMANTICS = 'recurring_budget_semantics';
+  const REGIONAL_REGULATED_CATEGORIES = 'regional_regulated_categories';
+  const REGIONAL_REGULATION_IDENTITIES = 'regional_regulation_identities';
   const REVIEW_FEEDBACK = 'review_feedback';
   const RF_PREDICTION_ID = 'rf_prediction_id';
   const SOURCE_ADSET = 'source_adset';
@@ -119,8 +111,10 @@ class AdSetFields extends AbstractEnum {
       'bid_info' => 'map<string, unsigned int>',
       'bid_strategy' => 'BidStrategy',
       'billing_event' => 'BillingEvent',
+      'brand_safety_config' => 'BrandSafetyCampaignConfig',
       'budget_remaining' => 'string',
       'campaign' => 'Campaign',
+      'campaign_active_time' => 'string',
       'campaign_attribution' => 'string',
       'campaign_id' => 'string',
       'configured_status' => 'ConfiguredStatus',
@@ -139,6 +133,7 @@ class AdSetFields extends AbstractEnum {
       'full_funnel_exploration_mode' => 'string',
       'id' => 'string',
       'instagram_actor_id' => 'string',
+      'is_budget_schedule_enabled' => 'bool',
       'is_dynamic_creative' => 'bool',
       'issues_info' => 'list<AdCampaignIssuesInfo>',
       'learning_stage_info' => 'AdCampaignLearningStageInfo',
@@ -146,6 +141,8 @@ class AdSetFields extends AbstractEnum {
       'lifetime_imps' => 'int',
       'lifetime_min_spend_target' => 'string',
       'lifetime_spend_cap' => 'string',
+      'max_budget_spend_percentage' => 'string',
+      'min_budget_spend_percentage' => 'string',
       'multi_optimization_goal_weight' => 'string',
       'name' => 'string',
       'optimization_goal' => 'OptimizationGoal',
@@ -154,6 +151,8 @@ class AdSetFields extends AbstractEnum {
       'promoted_object' => 'AdPromotedObject',
       'recommendations' => 'list<AdRecommendation>',
       'recurring_budget_semantics' => 'bool',
+      'regional_regulated_categories' => 'list<string>',
+      'regional_regulation_identities' => 'RegionalRegulationIdentities',
       'review_feedback' => 'string',
       'rf_prediction_id' => 'string',
       'source_adset' => 'AdSet',

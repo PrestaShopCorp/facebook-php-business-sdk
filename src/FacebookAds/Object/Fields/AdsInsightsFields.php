@@ -1,25 +1,10 @@
 <?php
-/**
- * Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
+ /*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * All rights reserved.
  *
- * You are hereby granted a non-exclusive, worldwide, royalty-free license to
- * use, copy, modify, and distribute this software in source code or binary
- * form for use in connection with the web services and APIs provided by
- * Facebook.
- *
- * As with any software that integrates with the Facebook platform, your use
- * of this software is subject to the Facebook Developer Principles and
- * Policies [http://developers.facebook.com/policy/]. This copyright notice
- * shall be included in all copies or substantial portions of the software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- *
+ * This source code is licensed under the license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 namespace FacebookAds\Object\Fields;
@@ -55,6 +40,7 @@ class AdsInsightsFields extends AbstractEnum {
   const AUCTION_BID = 'auction_bid';
   const AUCTION_COMPETITIVENESS = 'auction_competitiveness';
   const AUCTION_MAX_COMPETITOR_BID = 'auction_max_competitor_bid';
+  const AVERAGE_PURCHASES_CONVERSION_VALUE = 'average_purchases_conversion_value';
   const BUYING_TYPE = 'buying_type';
   const CAMPAIGN_ID = 'campaign_id';
   const CAMPAIGN_NAME = 'campaign_name';
@@ -120,8 +106,19 @@ class AdsInsightsFields extends AbstractEnum {
   const INTERACTIVE_COMPONENT_TAP = 'interactive_component_tap';
   const LABELS = 'labels';
   const LOCATION = 'location';
+  const MARKETING_MESSAGES_COST_PER_DELIVERED = 'marketing_messages_cost_per_delivered';
+  const MARKETING_MESSAGES_COST_PER_LINK_BTN_CLICK = 'marketing_messages_cost_per_link_btn_click';
+  const MARKETING_MESSAGES_DELIVERY_RATE = 'marketing_messages_delivery_rate';
+  const MARKETING_MESSAGES_LINK_BTN_CLICK_RATE = 'marketing_messages_link_btn_click_rate';
+  const MARKETING_MESSAGES_MEDIA_VIEW_RATE = 'marketing_messages_media_view_rate';
+  const MARKETING_MESSAGES_PHONE_CALL_BTN_CLICK_RATE = 'marketing_messages_phone_call_btn_click_rate';
+  const MARKETING_MESSAGES_QUICK_REPLY_BTN_CLICK_RATE = 'marketing_messages_quick_reply_btn_click_rate';
+  const MARKETING_MESSAGES_READ_RATE = 'marketing_messages_read_rate';
+  const MARKETING_MESSAGES_SPEND = 'marketing_messages_spend';
+  const MARKETING_MESSAGES_WEBSITE_PURCHASE_VALUES = 'marketing_messages_website_purchase_values';
   const MOBILE_APP_PURCHASE_ROAS = 'mobile_app_purchase_roas';
   const OBJECTIVE = 'objective';
+  const ONSITE_CONVERSION_MESSAGING_DETECTED_PURCHASE_DEDUPED = 'onsite_conversion_messaging_detected_purchase_deduped';
   const OPTIMIZATION_GOAL = 'optimization_goal';
   const OUTBOUND_CLICKS = 'outbound_clicks';
   const OUTBOUND_CLICKS_CTR = 'outbound_clicks_ctr';
@@ -129,10 +126,8 @@ class AdsInsightsFields extends AbstractEnum {
   const PURCHASE_ROAS = 'purchase_roas';
   const QUALIFYING_QUESTION_QUALIFY_ANSWER_RATE = 'qualifying_question_qualify_answer_rate';
   const QUALITY_RANKING = 'quality_ranking';
-  const QUALITY_SCORE_ECTR = 'quality_score_ectr';
-  const QUALITY_SCORE_ECVR = 'quality_score_ecvr';
-  const QUALITY_SCORE_ORGANIC = 'quality_score_organic';
   const REACH = 'reach';
+  const SHOPS_ASSISTED_PURCHASES = 'shops_assisted_purchases';
   const SOCIAL_SPEND = 'social_spend';
   const SPEND = 'spend';
   const TOTAL_POSTBACKS = 'total_postbacks';
@@ -190,6 +185,7 @@ class AdsInsightsFields extends AbstractEnum {
       'auction_bid' => 'string',
       'auction_competitiveness' => 'string',
       'auction_max_competitor_bid' => 'string',
+      'average_purchases_conversion_value' => 'list<AdsActionStats>',
       'buying_type' => 'string',
       'campaign_id' => 'string',
       'campaign_name' => 'string',
@@ -255,8 +251,19 @@ class AdsInsightsFields extends AbstractEnum {
       'interactive_component_tap' => 'list<AdsActionStats>',
       'labels' => 'string',
       'location' => 'string',
+      'marketing_messages_cost_per_delivered' => 'string',
+      'marketing_messages_cost_per_link_btn_click' => 'string',
+      'marketing_messages_delivery_rate' => 'string',
+      'marketing_messages_link_btn_click_rate' => 'string',
+      'marketing_messages_media_view_rate' => 'string',
+      'marketing_messages_phone_call_btn_click_rate' => 'string',
+      'marketing_messages_quick_reply_btn_click_rate' => 'string',
+      'marketing_messages_read_rate' => 'string',
+      'marketing_messages_spend' => 'string',
+      'marketing_messages_website_purchase_values' => 'string',
       'mobile_app_purchase_roas' => 'list<AdsActionStats>',
       'objective' => 'string',
+      'onsite_conversion_messaging_detected_purchase_deduped' => 'list<AdsActionStats>',
       'optimization_goal' => 'string',
       'outbound_clicks' => 'list<AdsActionStats>',
       'outbound_clicks_ctr' => 'list<AdsActionStats>',
@@ -264,15 +271,13 @@ class AdsInsightsFields extends AbstractEnum {
       'purchase_roas' => 'list<AdsActionStats>',
       'qualifying_question_qualify_answer_rate' => 'string',
       'quality_ranking' => 'string',
-      'quality_score_ectr' => 'string',
-      'quality_score_ecvr' => 'string',
-      'quality_score_organic' => 'string',
       'reach' => 'string',
+      'shops_assisted_purchases' => 'string',
       'social_spend' => 'string',
       'spend' => 'string',
       'total_postbacks' => 'string',
       'total_postbacks_detailed' => 'list<AdsActionStats>',
-      'total_postbacks_detailed_v4' => 'string',
+      'total_postbacks_detailed_v4' => 'list<AdsActionStats>',
       'unique_actions' => 'list<AdsActionStats>',
       'unique_clicks' => 'string',
       'unique_conversions' => 'list<AdsActionStats>',
@@ -295,10 +300,10 @@ class AdsInsightsFields extends AbstractEnum {
       'video_p75_watched_actions' => 'list<AdsActionStats>',
       'video_p95_watched_actions' => 'list<AdsActionStats>',
       'video_play_actions' => 'list<AdsActionStats>',
-      'video_play_curve_actions' => 'list<Object>',
-      'video_play_retention_0_to_15s_actions' => 'list<Object>',
-      'video_play_retention_20_to_60s_actions' => 'list<Object>',
-      'video_play_retention_graph_actions' => 'list<Object>',
+      'video_play_curve_actions' => 'list<AdsHistogramStats>',
+      'video_play_retention_0_to_15s_actions' => 'list<AdsHistogramStats>',
+      'video_play_retention_20_to_60s_actions' => 'list<AdsHistogramStats>',
+      'video_play_retention_graph_actions' => 'list<AdsHistogramStats>',
       'video_thruplay_watched_actions' => 'list<AdsActionStats>',
       'video_time_watched_actions' => 'list<AdsActionStats>',
       'website_ctr' => 'list<AdsActionStats>',

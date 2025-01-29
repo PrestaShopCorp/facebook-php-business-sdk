@@ -1,25 +1,10 @@
 <?php
-/**
- * Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
+ /*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * All rights reserved.
  *
- * You are hereby granted a non-exclusive, worldwide, royalty-free license to
- * use, copy, modify, and distribute this software in source code or binary
- * form for use in connection with the web services and APIs provided by
- * Facebook.
- *
- * As with any software that integrates with the Facebook platform, your use
- * of this software is subject to the Facebook Developer Principles and
- * Policies [http://developers.facebook.com/policy/]. This copyright notice
- * shall be included in all copies or substantial portions of the software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- *
+ * This source code is licensed under the license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 namespace FacebookAds\Object;
@@ -29,8 +14,10 @@ use FacebookAds\Cursor;
 use FacebookAds\Http\RequestInterface;
 use FacebookAds\TypeChecker;
 use FacebookAds\Object\Fields\ProductItemFields;
+use FacebookAds\Object\Values\OverrideDetailsTypeValues;
 use FacebookAds\Object\Values\ProductItemAgeGroupValues;
 use FacebookAds\Object\Values\ProductItemAvailabilityValues;
+use FacebookAds\Object\Values\ProductItemCapabilityToReviewStatusValues;
 use FacebookAds\Object\Values\ProductItemCommerceTaxCategoryValues;
 use FacebookAds\Object\Values\ProductItemConditionValues;
 use FacebookAds\Object\Values\ProductItemErrorPriorityValues;
@@ -41,6 +28,7 @@ use FacebookAds\Object\Values\ProductItemMarkedForProductLaunchValues;
 use FacebookAds\Object\Values\ProductItemOriginCountryValues;
 use FacebookAds\Object\Values\ProductItemReviewStatusValues;
 use FacebookAds\Object\Values\ProductItemShippingWeightUnitValues;
+use FacebookAds\Object\Values\ProductItemVideoFetchStatusValues;
 use FacebookAds\Object\Values\ProductItemVisibilityValues;
 use FacebookAds\Object\Values\ProductItemWaComplianceCategoryValues;
 
@@ -73,11 +61,13 @@ class ProductItem extends AbstractCrudObject {
     $ref_enums = array();
     $ref_enums['AgeGroup'] = ProductItemAgeGroupValues::getInstance()->getValues();
     $ref_enums['Availability'] = ProductItemAvailabilityValues::getInstance()->getValues();
+    $ref_enums['CapabilityToReviewStatus'] = ProductItemCapabilityToReviewStatusValues::getInstance()->getValues();
     $ref_enums['Condition'] = ProductItemConditionValues::getInstance()->getValues();
     $ref_enums['Gender'] = ProductItemGenderValues::getInstance()->getValues();
     $ref_enums['ImageFetchStatus'] = ProductItemImageFetchStatusValues::getInstance()->getValues();
     $ref_enums['ReviewStatus'] = ProductItemReviewStatusValues::getInstance()->getValues();
     $ref_enums['ShippingWeightUnit'] = ProductItemShippingWeightUnitValues::getInstance()->getValues();
+    $ref_enums['VideoFetchStatus'] = ProductItemVideoFetchStatusValues::getInstance()->getValues();
     $ref_enums['Visibility'] = ProductItemVisibilityValues::getInstance()->getValues();
     $ref_enums['CommerceTaxCategory'] = ProductItemCommerceTaxCategoryValues::getInstance()->getValues();
     $ref_enums['ErrorPriority'] = ProductItemErrorPriorityValues::getInstance()->getValues();
@@ -105,6 +95,32 @@ class ProductItem extends AbstractCrudObject {
       new CatalogItemChannelsToIntegrityStatus(),
       'EDGE',
       CatalogItemChannelsToIntegrityStatus::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getOverrideDetails(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'keys' => 'list<string>',
+      'type' => 'type_enum',
+    );
+    $enums = array(
+      'type_enum' => OverrideDetailsTypeValues::getInstance()->getValues(),
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/override_details',
+      new OverrideDetails(),
+      'EDGE',
+      OverrideDetails::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -148,9 +164,9 @@ class ProductItem extends AbstractCrudObject {
       $this->data['id'],
       RequestInterface::METHOD_GET,
       '/videos_metadata',
-      new AbstractCrudObject(),
+      new DynamicVideoMetadata(),
       'EDGE',
-      array(),
+      DynamicVideoMetadata::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -214,7 +230,6 @@ class ProductItem extends AbstractCrudObject {
 
     $param_types = array(
       'additional_image_urls' => 'list<string>',
-      'additional_uploaded_image_ids' => 'list<string>',
       'additional_variant_attributes' => 'map',
       'android_app_name' => 'string',
       'android_class' => 'string',
@@ -265,13 +280,15 @@ class ProductItem extends AbstractCrudObject {
       'material' => 'string',
       'mobile_link' => 'string',
       'name' => 'string',
-      'offer_price_amount' => 'unsigned int',
-      'offer_price_end_date' => 'datetime',
-      'offer_price_start_date' => 'datetime',
       'ordering_index' => 'unsigned int',
       'origin_country' => 'origin_country_enum',
       'pattern' => 'string',
       'price' => 'unsigned int',
+      'product_priority_0' => 'float',
+      'product_priority_1' => 'float',
+      'product_priority_2' => 'float',
+      'product_priority_3' => 'float',
+      'product_priority_4' => 'float',
       'product_type' => 'string',
       'quantity_to_sell_on_facebook' => 'unsigned int',
       'retailer_id' => 'string',

@@ -1,25 +1,10 @@
 <?php
-/**
- * Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
+ /*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * All rights reserved.
  *
- * You are hereby granted a non-exclusive, worldwide, royalty-free license to
- * use, copy, modify, and distribute this software in source code or binary
- * form for use in connection with the web services and APIs provided by
- * Facebook.
- *
- * As with any software that integrates with the Facebook platform, your use
- * of this software is subject to the Facebook Developer Principles and
- * Policies [http://developers.facebook.com/policy/]. This copyright notice
- * shall be included in all copies or substantial portions of the software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- *
+ * This source code is licensed under the license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 namespace FacebookAds\Object;
@@ -72,9 +57,157 @@ class IGUser extends AbstractCrudObject {
       $this->data['id'],
       RequestInterface::METHOD_GET,
       '/available_catalogs',
+      new UserAvailableCatalogs(),
+      'EDGE',
+      UserAvailableCatalogs::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getBrandedContentAdPermissions(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/branded_content_ad_permissions',
+      new IGBCAdsPermission(),
+      'EDGE',
+      IGBCAdsPermission::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function createBrandedContentAdPermission(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'creator_instagram_account' => 'string',
+      'creator_instagram_username' => 'string',
+      'revoke' => 'bool',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_POST,
+      '/branded_content_ad_permissions',
+      new IGBCAdsPermission(),
+      'EDGE',
+      IGBCAdsPermission::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getBrandedContentAdvertisableMedias(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'ad_code' => 'string',
+      'creator_username' => 'string',
+      'only_fetch_allowlisted' => 'bool',
+      'permalinks' => 'list<string>',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/branded_content_advertisable_medias',
+      new BrandedContentShadowIGMediaID(),
+      'EDGE',
+      BrandedContentShadowIGMediaID::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function deleteBrandedContentTagApproval(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'user_ids' => 'list<unsigned int>',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_DELETE,
+      '/branded_content_tag_approval',
       new AbstractCrudObject(),
       'EDGE',
       array(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getBrandedContentTagApproval(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'user_ids' => 'list<unsigned int>',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/branded_content_tag_approval',
+      new BrandedContentShadowIGUserID(),
+      'EDGE',
+      BrandedContentShadowIGUserID::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function createBrandedContentTagApproval(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'user_ids' => 'list<unsigned int>',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_POST,
+      '/branded_content_tag_approval',
+      new BrandedContentShadowIGUserID(),
+      'EDGE',
+      BrandedContentShadowIGUserID::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -97,9 +230,9 @@ class IGUser extends AbstractCrudObject {
       $this->data['id'],
       RequestInterface::METHOD_GET,
       '/catalog_product_search',
-      new AbstractCrudObject(),
+      new ShadowIGUserCatalogProductSearch(),
       'EDGE',
-      array(),
+      ShadowIGUserCatalogProductSearch::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -121,9 +254,56 @@ class IGUser extends AbstractCrudObject {
       $this->data['id'],
       RequestInterface::METHOD_GET,
       '/content_publishing_limit',
-      new AbstractCrudObject(),
+      new ContentPublishingLimitResponse(),
       'EDGE',
-      array(),
+      ContentPublishingLimitResponse::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function getDataset(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_GET,
+      '/dataset',
+      new Dataset(),
+      'EDGE',
+      Dataset::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function createDataset(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'dataset_name' => 'string',
+    );
+    $enums = array(
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_POST,
+      '/dataset',
+      new Dataset(),
+      'EDGE',
+      Dataset::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -223,6 +403,7 @@ class IGUser extends AbstractCrudObject {
       'audio_name' => 'string',
       'caption' => 'string',
       'children' => 'list<string>',
+      'collaborators' => 'list<string>',
       'cover_url' => 'string',
       'image_url' => 'string',
       'is_carousel_item' => 'bool',
@@ -231,6 +412,7 @@ class IGUser extends AbstractCrudObject {
       'product_tags' => 'list<map>',
       'share_to_feed' => 'bool',
       'thumb_offset' => 'string',
+      'upload_type' => 'string',
       'user_tags' => 'list<map>',
       'video_url' => 'string',
     );
@@ -339,9 +521,9 @@ class IGUser extends AbstractCrudObject {
       $this->data['id'],
       RequestInterface::METHOD_GET,
       '/product_appeal',
-      new AbstractCrudObject(),
+      new IGShoppingProductAppeal(),
       'EDGE',
-      array(),
+      IGShoppingProductAppeal::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -364,9 +546,9 @@ class IGUser extends AbstractCrudObject {
       $this->data['id'],
       RequestInterface::METHOD_POST,
       '/product_appeal',
-      new AbstractCrudObject(),
+      new IGShoppingProductAppeal(),
       'EDGE',
-      array(),
+      IGShoppingProductAppeal::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -387,9 +569,9 @@ class IGUser extends AbstractCrudObject {
       $this->data['id'],
       RequestInterface::METHOD_GET,
       '/recently_searched_hashtags',
-      new AbstractCrudObject(),
+      new ShadowIGHashtag(),
       'EDGE',
-      array(),
+      ShadowIGHashtag::getFieldsEnum()->getValues(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);
@@ -436,6 +618,48 @@ class IGUser extends AbstractCrudObject {
       new IGMedia(),
       'EDGE',
       IGMedia::getFieldsEnum()->getValues(),
+      new TypeChecker($param_types, $enums)
+    );
+    $request->addParams($params);
+    $request->addFields($fields);
+    return $pending ? $request : $request->execute();
+  }
+
+  public function createUpcomingEvent(array $fields = array(), array $params = array(), $pending = false) {
+    $this->assureId();
+
+    $param_types = array(
+      'end_time' => 'datetime',
+      'notification_subtypes' => 'list<notification_subtypes_enum>',
+      'start_time' => 'datetime',
+      'title' => 'string',
+    );
+    $enums = array(
+      'notification_subtypes_enum' => array(
+        'AFTER_EVENT_1DAY',
+        'AFTER_EVENT_2DAY',
+        'AFTER_EVENT_3DAY',
+        'AFTER_EVENT_4DAY',
+        'AFTER_EVENT_5DAY',
+        'AFTER_EVENT_6DAY',
+        'AFTER_EVENT_7DAY',
+        'BEFORE_EVENT_15MIN',
+        'BEFORE_EVENT_1DAY',
+        'BEFORE_EVENT_1HOUR',
+        'BEFORE_EVENT_2DAY',
+        'EVENT_START',
+        'RESCHEDULED',
+      ),
+    );
+
+    $request = new ApiRequest(
+      $this->api,
+      $this->data['id'],
+      RequestInterface::METHOD_POST,
+      '/upcoming_events',
+      new AbstractCrudObject(),
+      'EDGE',
+      array(),
       new TypeChecker($param_types, $enums)
     );
     $request->addParams($params);

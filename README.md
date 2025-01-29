@@ -53,19 +53,9 @@ The Facebook Business SDK requires PHP 8.0 or greater.
 
 The Facebook Business SDK uses composer to manage dependencies. Visit the <a href="https://getcomposer.org/download/" target="_blank">composer documentation</a> to learn how to install composer.
 
-Add the following to your `composer.json` file:
-
-```json
-{
-    "require": {
-        "facebook/php-business-sdk": "16.0.*"
-    }
-}
-```
-then install it through composer:
-
+Execute the command below in your project root:
 ```shell
-php composer.phar install --no-dev
+composer require facebook/php-business-sdk
 ```
 
 This SDK and its dependencies will be installed under `./vendor`.
@@ -161,7 +151,7 @@ $adset = $account->createAdSet(
     array(),
     array(
       AdSetFields::NAME => 'My Test AdSet',
-      AdSetFields::CAMPAIGN_ID => campaign_id,
+      AdSetFields::CAMPAIGN_ID => $campaign_id,
       AdSetFields::DAILY_BUDGET => 150,
       AdSetFields::START_TIME => (new \DateTime("+1 week"))->format(\DateTime::ISO8601),
       AdSetFields::END_TIME => (new \DateTime("+2 week"))->format(\DateTime::ISO8601),
@@ -342,7 +332,7 @@ $account->read(array('id'));
 ```
 
 When running this code, this cURL request will be printed to the console as:
-```
+```shell
 curl -G \
   -d 'fields=id' \
   -d 'access_token=<access_token>' \

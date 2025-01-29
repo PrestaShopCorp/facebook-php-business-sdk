@@ -1,25 +1,10 @@
 <?php
-/**
- * Copyright (c) 2015-present, Facebook, Inc. All rights reserved.
+ /*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * All rights reserved.
  *
- * You are hereby granted a non-exclusive, worldwide, royalty-free license to
- * use, copy, modify, and distribute this software in source code or binary
- * form for use in connection with the web services and APIs provided by
- * Facebook.
- *
- * As with any software that integrates with the Facebook platform, your use
- * of this software is subject to the Facebook Developer Principles and
- * Policies [http://developers.facebook.com/policy/]. This copyright notice
- * shall be included in all copies or substantial portions of the software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
- * DEALINGS IN THE SOFTWARE.
- *
+ * This source code is licensed under the license found in the
+ * LICENSE file in the root directory of this source tree.
  */
 
 namespace FacebookAds\Object\Fields;
@@ -41,8 +26,10 @@ class AdCreativeObjectStorySpecFields extends AbstractEnum {
   const LINK_DATA = 'link_data';
   const PAGE_ID = 'page_id';
   const PHOTO_DATA = 'photo_data';
+  const PRODUCT_DATA = 'product_data';
   const TEMPLATE_DATA = 'template_data';
   const TEXT_DATA = 'text_data';
+  const THREADS_USER_ID = 'threads_user_id';
   const VIDEO_DATA = 'video_data';
 
   public function getFieldTypes() {
@@ -51,8 +38,10 @@ class AdCreativeObjectStorySpecFields extends AbstractEnum {
       'link_data' => 'AdCreativeLinkData',
       'page_id' => 'string',
       'photo_data' => 'AdCreativePhotoData',
+      'product_data' => 'list<AdCreativeProductData>',
       'template_data' => 'AdCreativeLinkData',
       'text_data' => 'AdCreativeTextData',
+      'threads_user_id' => 'string',
       'video_data' => 'AdCreativeVideoData',
     );
   }
